@@ -59,11 +59,9 @@ function createCard(actor) {
 }
 
 function createLinks(actor) {
-  const { contacts } = actor;
   const link = document.createElement("a");
   link.classList.add("card-link-wrapper");
-  console.log(contacts[0]);
-  link.setAttribute("href", contacts[0]);
+  link.setAttribute("href", actor.contacts[0]);
   return link;
 }
 
