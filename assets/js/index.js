@@ -3,8 +3,8 @@ const root = document.getElementById("root");
 
 const mapSocialClass = new Map();
 mapSocialClass.set("www.facebook.com", "fa-facebook");
-mapSocialClass.set("www.twitter.com", "twitter");
-mapSocialClass.set("www.instagram.com", "instagram");
+mapSocialClass.set("www.instagram.com", "fa-instagram");
+mapSocialClass.set("twitter.com", "fa-twitter");
 
 function fullName(actor) {
   return `${actor.firstName} ${actor.lastName}`;
@@ -38,12 +38,6 @@ function createElement(
 }
 
 function createCard(actor) {
-  // const url = new URL(user.contacts[0]);
-  // const a = document.createElement('a');
-  // a.classList.add(mapSocialClass.get(url.hostname));
-  // console.log(a)
-  /*** ***/
-
   const h2 = createElement(
     "h2",
     { classNames: ["card-fullname"] },
@@ -54,15 +48,31 @@ function createCard(actor) {
     { classNames: ["card-container"] },
     createWrapper(actor),
     h2,
-    createLinks(actor)
+    createWrapperLinks(actor)
   );
 }
 
-function createLinks(actor) {
+function createLink(element) {
+  const url = new URL(element);
   const link = document.createElement("a");
-  link.classList.add("card-link-wrapper");
-  link.setAttribute("href", actor.contacts[0]);
+  link.classList.add("fa-brands");
+  link.classList.add(mapSocialClass.get(url.hostname));
+  link.setAttribute("href", element);
+  link.setAttribute("target", "_blank");
   return link;
+}
+
+function createWrapperLinks(actor) {
+  const linkWrapper = document.createElement("div");
+  linkWrapper.classList.add("card-photo-wrapper-link");
+
+  const { contacts } = actor;
+  contacts.forEach((element) => {
+    // createLink(element);
+    linkWrapper.append(createLink(element));
+  });
+
+  return linkWrapper;
 }
 
 function createImage({ id, profilePicture, lastName }) {
