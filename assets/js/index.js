@@ -68,7 +68,6 @@ function createWrapperLinks(actor) {
 
   const { contacts } = actor;
   contacts.forEach((element) => {
-    // createLink(element);
     linkWrapper.append(createLink(element));
   });
 
@@ -142,3 +141,43 @@ fetch("./data.json")
       console.error(error);
     }
   });
+
+////////////////////////////КЛИК///////////////////////
+const stateSet = new Set();
+const state = [];
+const clickChoosed = document.getElementById("clickChoosed");
+
+document.addEventListener("click", (e) => {
+  e.preventDefault();
+  stateSet.add(e.target.textContent);
+
+  const idenfical = [...stateSet.values()];
+  const iteam = idenfical.map((elem) => createList(elem));
+  clickChoosed.append(...iteam);
+});
+
+function createList(list) {
+  return createElement(
+    "li",
+    { classNames: ["list-iteam"] },
+    document.createTextNode(list)
+  );
+}
+
+// const state = [];
+// const clickChoosed = document.getElementById("clickChoosed");
+// document.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   state.push(e.target.textContent);
+
+//   const iteam = state.map((elem) => createList(elem));
+//   clickChoosed.append(...iteam);
+// });
+
+// function createList(list) {
+//   return createElement(
+//     "li",
+//     { classNames: ["list-iteam"] },
+//     document.createTextNode(list)
+//   );
+// }
