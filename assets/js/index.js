@@ -1,14 +1,9 @@
 "use strict";
 const root = document.getElementById("root");
-
 const mapSocialClass = new Map();
 mapSocialClass.set("www.facebook.com", "fa-facebook");
 mapSocialClass.set("www.instagram.com", "fa-instagram");
 mapSocialClass.set("twitter.com", "fa-twitter");
-
-function fullName(actor) {
-  return `${actor.firstName} ${actor.lastName}`;
-}
 
 /**
  *
@@ -111,20 +106,6 @@ function photoErrorHandler({ target }) {
   return;
 }
 
-/* utilits */
-function stringToColour(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  let colour = "#";
-  for (let i = 0; i < 3; i++) {
-    let value = (hash >> (i * 8)) & 0xff;
-    colour += ("00" + value.toString(16)).slice(-2);
-  }
-  return colour;
-}
-
 fetch("./data.json")
   .then((response) => response.json())
   .then((actors) => {
@@ -142,6 +123,24 @@ fetch("./data.json")
     }
   });
 
+/* utilits */
+function stringToColour(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  let colour = "#";
+  for (let i = 0; i < 3; i++) {
+    let value = (hash >> (i * 8)) & 0xff;
+    colour += ("00" + value.toString(16)).slice(-2);
+  }
+  return colour;
+}
+
+function fullName(actor) {
+  return `${actor.firstName} ${actor.lastName}`;
+}
+
 ////////////////////////////КЛИК///////////////////////
 const stateSet = new Set();
 const state = [];
@@ -149,11 +148,14 @@ const clickChoosed = document.getElementById("clickChoosed");
 
 document.addEventListener("click", (e) => {
   e.preventDefault();
-  stateSet.add(e.target.textContent);
-
-  const idenfical = [...stateSet.values()];
-  const iteam = idenfical.map((elem) => createList(elem));
-  clickChoosed.append(...iteam);
+  const nameActor =
+    e.target.textContent === "NN "
+      ? e.target.textContent
+      : e.target.textContent.substring(1);
+  if (!state.includes(nameActor)) {
+    state.push(nameActor);
+    clickChoosed.append(createList(nameActor));
+  }
 });
 
 function createList(list) {
@@ -163,21 +165,3 @@ function createList(list) {
     document.createTextNode(list)
   );
 }
-
-// const state = [];
-// const clickChoosed = document.getElementById("clickChoosed");
-// document.addEventListener("click", (e) => {
-//   e.preventDefault();
-//   state.push(e.target.textContent);
-
-//   const iteam = state.map((elem) => createList(elem));
-//   clickChoosed.append(...iteam);
-// });
-
-// function createList(list) {
-//   return createElement(
-//     "li",
-//     { classNames: ["list-iteam"] },
-//     document.createTextNode(list)
-//   );
-// }
