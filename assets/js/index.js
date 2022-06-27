@@ -106,6 +106,14 @@ function photoErrorHandler({ target }) {
   return;
 }
 
+function createErrorContent() {
+  return createElement(
+    "div",
+    { classNames: ["error-content"] },
+    document.createTextNode("Oops...a critical error has occurred")
+  );
+}
+
 fetch("./data.json")
   .then((response) => response.json())
   .then((actors) => {
@@ -113,7 +121,9 @@ fetch("./data.json")
     root.append(...cards);
   })
   .catch((error) => {
-    document.body.prepend(document.createTextNode("500"));
+    const span = createErrorContent();
+    document.body.prepend(span);
+
     if (error instanceof TypeError) {
       console.error("Ошибка соединения: ", error);
     } else if (error instanceof SyntaxError) {

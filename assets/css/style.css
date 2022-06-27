@@ -25,6 +25,7 @@ section {
   min-width: 320px;
   max-width: 1100px;
   margin: auto;
+  position: relative;
 }
 
 .card-wrapper {
@@ -117,4 +118,17 @@ a {
 #clickChoosed {
   box-sizing: content-box;
   width: 100%;
+}
+
+.error-content {
+  padding-top: 5em;
+  position: fixed;
+
+  width: 100vw;
+  height: 100vh;
+  background: #ff676c;
+
+  color: #fff;
+  font-weight: bold;
+  font-size: 3rem;
 }
